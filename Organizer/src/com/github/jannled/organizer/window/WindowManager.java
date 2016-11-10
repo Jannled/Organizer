@@ -43,7 +43,7 @@ public class WindowManager
 	Vector<ListEntry> entryList = new Vector<ListEntry>();
 	private ListEntry activeEntryList;
 	private final JPanel managerCategory = new JPanel();
-	private final Textfield newCategoryName = new Textfield();
+	private final Textfield newCategoryName = new Textfield(ResourceBundle.getBundle("com.github.jannled.organizer.window.messages").getString("WindowManager.newCategoryName.defaultText"));
 	private final JButton submitNewCategory = new JButton(ResourceBundle.getBundle("com.github.jannled.organizer.window.messages").getString("WindowManager.submitNewCategory.text")); //$NON-NLS-1$ //$NON-NLS-2$
 	private final JPanel newCategory = new JPanel();
 	private final JToolBar toolBar = new JToolBar();

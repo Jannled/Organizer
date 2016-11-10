@@ -1,6 +1,7 @@
 package com.github.jannled.organizer.window;
 
 import java.awt.GridLayout;
+import java.util.ResourceBundle;
 
 import javax.swing.JPanel;
 
@@ -15,7 +16,7 @@ public class Searchbar extends JPanel
 	public Searchbar()
 	{
 		setLayout(new GridLayout(0, 1));
-		searchField = new Textfield("Suche nach einem Gegenstand");
+		searchField = new Textfield(ResourceBundle.getBundle("com.github.jannled.organizer.window.messages").getString("Searchbar.searchField.defaultText"));
 		add(searchField);
 	}
 	

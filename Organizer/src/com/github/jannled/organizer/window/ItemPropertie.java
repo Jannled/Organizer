@@ -21,23 +21,26 @@ public class ItemPropertie extends JPanel implements ActionListener
 {
 	private static final long serialVersionUID = 2312896473509851231L;
 	
+	ItemAdder parent;
 	Textfield key;
 	Textfield value;
 	JButton remove = new JButton();
 	ImageIcon icon;
 	JPanel panelProperties = new JPanel(new GridLayout(1, 2));
 
-	public ItemPropertie(String key, String value)
+	public ItemPropertie(String key, String value, ItemAdder parent)
 	{
 		this.key = new Textfield();
 		this.value = new Textfield(value);
+		this.parent = parent;
 		setup();
 	}
 	
-	public ItemPropertie()
+	public ItemPropertie(ItemAdder parent)
 	{
 		this.key = new Textfield(ResourceBundle.getBundle("com.github.jannled.organizer.window.messages").getString("ItemPropertie.key.defaultText"));
 		this.value = new Textfield(ResourceBundle.getBundle("com.github.jannled.organizer.window.messages").getString("ItemPropertie.value.defaultText"));
+		this.parent = parent;
 		setup();
 	}
 	
@@ -80,10 +83,10 @@ public class ItemPropertie extends JPanel implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		JPanel parent = (JPanel) getParent();
 		if(e.getSource() == remove)
 		{
-			parent.remove(this);
+			parent.removePropertie(this);
+			parent.panelProperties.remove(this);
 			parent.revalidate();
 		}
 	}

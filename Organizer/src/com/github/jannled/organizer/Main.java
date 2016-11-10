@@ -34,6 +34,7 @@ public class Main
 
 	public static void main(String[] args)
 	{
+		Print.setOutputLevel(Print.ALL);
 		Print.m("Running Organizer with arguments " + ArrayUtils.arrayToString(args) + ".");
 		Utils.setOSLook();
 		new Main();

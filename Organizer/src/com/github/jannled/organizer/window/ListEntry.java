@@ -9,10 +9,13 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
+import com.github.jannled.lib.datastorage.StorageKey;
+
 public class ListEntry extends JPanel
 {
 	private static final long serialVersionUID = 6234778588489197751L;
 	
+	private StorageKey category;
 	private String name;
 	private JPanel panel = new JPanel(new GridLayout(0, 1));
 	private JScrollPane scrollBar;
@@ -20,10 +23,11 @@ public class ListEntry extends JPanel
 	
 	private Vector<Entry> entrys = new Vector<Entry>();
 	
-	public ListEntry(Entry[] entrys, String name, ItemAdder itemAdder)
+	public ListEntry(Entry[] entrys, String name, StorageKey category)
 	{	
 		this.name = name;
-		this.itemAdder = itemAdder;
+		this.category = category;
+		itemAdder = new ItemAdder(this.category, this);
 		
 		setup();
 		for(Entry e : entrys)
@@ -33,10 +37,11 @@ public class ListEntry extends JPanel
 		}
 	}
 	
-	public ListEntry(String name, ItemAdder itemAdder)
+	public ListEntry(String name, StorageKey category)
 	{
 		this.name = name;
-		this.itemAdder = itemAdder;
+		this.category = category;
+		itemAdder = new ItemAdder(this.category, this);
 		
 		setup();
 	}

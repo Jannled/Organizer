@@ -40,29 +40,22 @@ public class Entry extends JPanel
 		
 		this.setLayout(null);
 		
-		JTextField id = new JTextField("Item");
-		id.setFont(new Font(defaultF, Font.PLAIN, 20));
-		id.setEditable(false);
-		id.setBounds(5, 5, 50, 50);
-		
 		JTextField name = new JTextField(storageKey.getName());
 		name.setFont(new Font(defaultF, Font.PLAIN, 15));
 		name.setEditable(false);
-		name.setBounds(55, 5, 200, 20);
+		name.setBounds(0, 0, 600, 20);
 		
 		JTextArea description = new JTextArea(storageKey.getValue());
 		description.setLineWrap(true);
 		description.setBackground(UIManager.getColor("Panel.background"));
 		description.setFont(new Font(defaultF, Font.PLAIN, 10));
-		description.setBounds(55, 25, 200, 30);
+		description.setBounds(0, 20, 600, 300);
 		description.setEditable(false);
 		
-		this.add(id);
 		this.add(name);
 		this.add(description);
 		
 		mouseEvents(this);
-		mouseEvents(id);
 		mouseEvents(name);
 		mouseEvents(description);
 	}

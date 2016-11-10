@@ -25,6 +25,7 @@ public class ItemAdder extends JPanel implements ActionListener
 {
 	private static final long serialVersionUID = 8861026527796473837L;
 	
+	ListEntry list;
 	StorageKey category;
 	JPanel panelName = new JPanel();
 	JPanel panelProperties = new JPanel();
@@ -33,8 +34,9 @@ public class ItemAdder extends JPanel implements ActionListener
 	JButton btnAddPropertie = new JButton(ResourceBundle.getBundle("com.github.jannled.organizer.window.messages").getString("ItemAdder.btnAddPropertie.text"));
 	JButton btnConfirm = new JButton(ResourceBundle.getBundle("com.github.jannled.organizer.window.messages").getString("ItemAdder.btnConfirm.text"));
 	
-	public ItemAdder(StorageKey category)
+	public ItemAdder(StorageKey category, ListEntry list)
 	{
+		this.list = list;
 		this.category = category;
 		setup();
 	}
@@ -67,10 +69,28 @@ public class ItemAdder extends JPanel implements ActionListener
 		panelProperties.remove(btnAddPropertie);
 		panelProperties.remove(btnConfirm);
 		properties = incrementArray(properties, 1);
-		properties[properties.length-1] = new ItemPropertie();
+		properties[properties.length-1] = new ItemPropertie(this);
 		panelProperties.add(properties[properties.length-1]);
 		panelProperties.add(btnAddPropertie);
 		panelProperties.add(btnConfirm);
+		panelProperties.revalidate();
+	}
+	
+	private void addItem()
+	{
+		Print.d("Name: " + txtName.getText());
+		StorageKey newItem = new StorageKey(txtName.getText(), category);
+		for(ItemPropertie itemProp : properties)
+		{
+			newItem.addStorageKey(new StorageKey(itemProp.getPropertie()[0].getText(), itemProp.getPropertie()[1].getText(), newItem));
+			Print.d(itemProp.getPropertie()[0].getText() + ": " + itemProp.getPropertie()[1].getText());
+		}
+		list.addEntry(new Entry(newItem));
+		
+		properties = new ItemPropertie[0];
+		txtName.setText("");
+		panelProperties.removeAll();
+		addPropertie();
 		panelProperties.revalidate();
 	}
 	
@@ -86,6 +106,21 @@ public class ItemAdder extends JPanel implements ActionListener
 		}
 		return buffer;
 	}
+	
+	public void removePropertie(ItemPropertie itemPropertie)
+	{
+		ItemPropertie[] buffer = new ItemPropertie[properties.length-1];
+		int pos = 0;
+		for(int i=0; i<properties.length; i++)
+		{
+			if(properties[i]!=itemPropertie)
+			{
+				buffer[pos] = properties[i];
+				pos++;
+			}
+		}
+		properties = buffer;
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e)
@@ -99,6 +134,7 @@ public class ItemAdder extends JPanel implements ActionListener
 		else if(e.getSource() == btnConfirm)
 		{
 			Print.m("Adding new Item");
+			addItem();
 		}
 	}
 	

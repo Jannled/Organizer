@@ -6,7 +6,6 @@ import com.github.jannled.lib.datastorage.Datastorage;
 import com.github.jannled.lib.datastorage.Storage;
 import com.github.jannled.lib.datastorage.StorageKey;
 import com.github.jannled.organizer.window.Entry;
-import com.github.jannled.organizer.window.ItemAdder;
 import com.github.jannled.organizer.window.ListEntry;
 
 public class Manager
@@ -36,7 +35,7 @@ public class Manager
 			{
 				entrys[j] = new Entry(key.getKeys().get(j));
 			}
-			entry[i] = new ListEntry(entrys, key.getName(), new ItemAdder(key));
+			entry[i] = new ListEntry(entrys, key.getName(), key);
 		}
 		lists = entry;
 		return entry;
@@ -50,7 +49,7 @@ public class Manager
 	public ListEntry addCategory(String name)
 	{
 		StorageKey category = new StorageKey(name, storage);
-		ListEntry list = new ListEntry(name, new ItemAdder(category));
+		ListEntry list = new ListEntry(name, category);
 		lists = incrementArray(lists, 1);
 		lists[lists.length-1] = list;
 		storage.addStorageKey(category);
