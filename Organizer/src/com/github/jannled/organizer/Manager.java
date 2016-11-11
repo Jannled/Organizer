@@ -33,7 +33,7 @@ public class Manager
 			Entry[] entrys = new Entry[key.getKeys().size()];
 			for(int j=0; j<entrys.length; j++)
 			{
-				entrys[j] = new Entry(key.getKeys().get(j));
+				entrys[j] = new Entry(entry[i], key.getKeys().get(j));
 			}
 			entry[i] = new ListEntry(entrys, key.getName(), key);
 		}

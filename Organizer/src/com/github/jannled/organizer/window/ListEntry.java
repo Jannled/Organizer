@@ -1,9 +1,9 @@
 package com.github.jannled.organizer.window;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.util.Vector;
 
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -17,7 +17,7 @@ public class ListEntry extends JPanel
 	
 	private StorageKey category;
 	private String name;
-	private JPanel panel = new JPanel(new GridLayout(0, 1));
+	JPanel panel;
 	private JScrollPane scrollBar;
 	ItemAdder itemAdder;
 	
@@ -48,6 +48,8 @@ public class ListEntry extends JPanel
 	
 	private void setup()
 	{
+		panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		setLayout(new BorderLayout());
 		panel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		panel.add(itemAdder);
@@ -79,5 +81,10 @@ public class ListEntry extends JPanel
 	public String getName()
 	{
 		return name;
+	}
+	
+	public JPanel getPanel()
+	{
+		return panel;
 	}
 }

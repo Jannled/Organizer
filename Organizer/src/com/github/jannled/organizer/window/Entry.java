@@ -13,18 +13,29 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 
 import com.github.jannled.lib.datastorage.StorageKey;
+import com.github.jannled.window.DropdownButton;
 
 public class Entry extends JPanel
 {
 	private static final long serialVersionUID = 2943419749871064512L;
 
+	Dimension minimized = new Dimension(600, 20);
+	Dimension maximized = new Dimension(600, 100);
+	
+	ListEntry list;
+	DropdownButton dropdown;
 	StorageKey storageKey;
 	String[][] information;
+	JTextField name;
+	JTextArea description;
 	
-	public Entry(StorageKey storageKey)
+	public Entry(ListEntry list, StorageKey storageKey)
 	{
 		this.storageKey = storageKey;
 		StorageKey[] storageKeys = storageKey.getKeysArray();
+		name = new JTextField(storageKey.getName());
+		description = new JTextArea(storageKey.getValue());
+		
 		information = new String[storageKeys.length][2];
 		for(int i=0; i<storageKeys.length; i++)
 		{
@@ -40,24 +51,38 @@ public class Entry extends JPanel
 		
 		this.setLayout(null);
 		
-		JTextField name = new JTextField(storageKey.getName());
+		dropdown = new DropdownButton(20, 20);
+		this.add(dropdown);
+		
 		name.setFont(new Font(defaultF, Font.PLAIN, 15));
 		name.setEditable(false);
-		name.setBounds(0, 0, 600, 20);
+		name.setBounds(20, 0, 600, 20);
 		
-		JTextArea description = new JTextArea(storageKey.getValue());
 		description.setLineWrap(true);
 		description.setBackground(UIManager.getColor("Panel.background"));
 		description.setFont(new Font(defaultF, Font.PLAIN, 10));
-		description.setBounds(0, 20, 600, 300);
+		description.setBounds(20, 20, 600, 300);
 		description.setEditable(false);
+		setDescription();
 		
-		this.add(name);
 		this.add(description);
+		this.add(name);
 		
 		mouseEvents(this);
 		mouseEvents(name);
 		mouseEvents(description);
+	}
+	
+	public void setDescription()
+	{
+		for(int i=0; i<6; i++)
+		{
+			if(i<information.length)
+			{
+				String[] s = information[i];
+				description.setText(description.getText() + s[0] + ": " + s[1] + System.lineSeparator());
+			}
+		}
 	}
 	
 	public void mouseEvents(Component target)
@@ -109,8 +134,41 @@ public class Entry extends JPanel
 		
 	}
 	
+	@Override
+	public void repaint()
+	{
+		super.repaint();
+		if(dropdown!=null)
+		{
+			if(dropdown.getStatus())
+			{
+				add(description);
+				setMinimumSize(maximized);
+				setPreferredSize(maximized);
+				setSize(maximized);
+				revalidate();
+			}
+			else
+			{
+				remove(description);
+				setMinimumSize(minimized);
+				setPreferredSize(minimized);
+				setSize(minimized);
+				revalidate();
+			}
+		}
+	}
+	
+	@Override
 	public Dimension getPreferredSize() 
 	{
-		return new Dimension(260, 60);
+		if(dropdown.getStatus())
+		{
+			return maximized;
+		}
+		else
+		{
+			return minimized;
+		}
 	}
 }

@@ -2,6 +2,7 @@ package com.github.jannled.organizer.window;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -54,10 +55,21 @@ public class WindowManager
 
 	public WindowManager(Manager manager)
 	{
+		EventQueue.invokeLater(new Runnable() {
+			public void run()
+			{
+				try
+				{
+					frame = new JFrame();
+					initialize();
+					frame.setVisible(true);
+				} catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+			}
+		});
 		this.manager = manager;
-		
-		initialize();
-		frame.setVisible(true);
 	}
 	
 	private void initialize()

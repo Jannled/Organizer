@@ -85,7 +85,7 @@ public class ItemAdder extends JPanel implements ActionListener
 			newItem.addStorageKey(new StorageKey(itemProp.getPropertie()[0].getText(), itemProp.getPropertie()[1].getText(), newItem));
 			Print.d(itemProp.getPropertie()[0].getText() + ": " + itemProp.getPropertie()[1].getText());
 		}
-		list.addEntry(new Entry(newItem));
+		list.addEntry(new Entry(list, newItem));
 		
 		properties = new ItemPropertie[0];
 		txtName.setText("");
