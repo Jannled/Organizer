@@ -3,13 +3,14 @@ package com.github.jannled.organizer.window;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.File;
 import java.io.IOException;
+import java.util.ResourceBundle;
 import java.util.Vector;
 
 import javax.imageio.ImageIO;
@@ -29,8 +30,6 @@ import com.github.jannled.organizer.Main;
 import com.github.jannled.organizer.Manager;
 import com.github.jannled.window.TabbedPane;
 import com.github.jannled.window.Textfield;
-import java.awt.FlowLayout;
-import java.util.ResourceBundle;
 
 public class WindowManager
 {	
@@ -75,7 +74,7 @@ public class WindowManager
 	private void initialize()
 	{
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 682, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		
@@ -96,7 +95,7 @@ public class WindowManager
 		btnOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-				load(Main.saveFile);
+				load();
 			}
 		});
 		try
@@ -185,10 +184,10 @@ public class WindowManager
 		tabbedPane.remove(category);
 	}
 	
-	public void load(File file)
+	public void load()
 	{
-		Print.m("Loading File from disk");
-		ListEntry[] listEntrys = manager.loadSaveFile(file);
+		Print.m("Loading File " + Main.saveFile.getAbsolutePath());
+		ListEntry[] listEntrys = manager.loadSaveFile(Main.saveFile);
 		//Reset all
 		deleteCategory.removeAll();
 		for(ListEntry le : this.entryList)
@@ -204,9 +203,8 @@ public class WindowManager
 	
 	public void save()
 	{
-		Print.m("Writing changes to disk");
+		Print.m("Saving file " + Main.saveFile);
 		Datastorage.writeFile(Main.saveFile, manager.getStorage());
-		Print.m("Write complete!");
 	}
 	
 	public Manager getManager()

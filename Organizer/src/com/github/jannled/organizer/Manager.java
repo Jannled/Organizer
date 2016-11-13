@@ -20,12 +20,12 @@ public class Manager
 	
 	/**
 	 * Reads the save file and stores its content into Manager, returns an Array of ListEntry for conveniece
-	 * @param file
+	 * @param saveFile
 	 * @return
 	 */
-	public ListEntry[] loadSaveFile(File file)
+	public ListEntry[] loadSaveFile(File saveFile)
 	{
-		this.storage = Datastorage.parseFile(file);
+		this.storage = Datastorage.parseFile(saveFile);
 		ListEntry[] entry = new ListEntry[storage.getKeys().size()];
 		for(int i=0; i<entry.length; i++)
 		{
@@ -61,11 +61,6 @@ public class Manager
 		lists = incrementArray(lists, 1);
 		lists[lists.length] = category;
 		storage.addStorageKey(new StorageKey(category.getName(), storage));
-	}
-	
-	public void addItem(String name, String[][] values)
-	{
-		
 	}
 	
 	public void removeCategory(ListEntry category)

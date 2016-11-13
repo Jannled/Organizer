@@ -54,6 +54,8 @@ public class CategoryRemover extends JPanel implements ActionListener
 		{
 			Print.m("Removing Category " + category.getName() + "!");
 			window.removeCategory(category);
+			//Line where the category gets removed
+			category.getCategory().getParent().removeKey(category.getCategory());
 			getParent().remove(this);
 		}
 	}

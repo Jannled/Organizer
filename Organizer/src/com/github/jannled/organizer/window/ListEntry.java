@@ -87,4 +87,9 @@ public class ListEntry extends JPanel
 	{
 		return panel;
 	}
+	
+	public StorageKey getCategory()
+	{
+		return category;
+	}
 }

@@ -56,12 +56,12 @@ public class Entry extends JPanel
 		
 		name.setFont(new Font(defaultF, Font.PLAIN, 15));
 		name.setEditable(false);
-		name.setBounds(20, 0, 600, 20);
+		name.setBounds(20, 0, 580, 20);
 		
 		description.setLineWrap(true);
 		description.setBackground(UIManager.getColor("Panel.background"));
 		description.setFont(new Font(defaultF, Font.PLAIN, 10));
-		description.setBounds(20, 20, 600, 300);
+		description.setBounds(20, 20, 580, 280);
 		description.setEditable(false);
 		setDescription();
 		

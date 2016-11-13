@@ -1,34 +1,29 @@
 package com.github.jannled.organizer;
 
 import java.io.File;
-import java.net.URISyntaxException;
-import java.net.URL;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
 import com.github.jannled.lib.ArrayUtils;
+import com.github.jannled.lib.FileUtils;
 import com.github.jannled.lib.Print;
 import com.github.jannled.organizer.window.WindowManager;
 import com.github.jannled.window.Utils;
 
 public class Main
 {
-	WindowManager windowManager;
 	public static File saveFile;
+	WindowManager windowManager;
 	Manager manager;
 	
 	public Main()
 	{
 		manager = new Manager();
 		windowManager = new WindowManager(manager);
-		try
-		{
-			URL savePath = this.getClass().getResource("items.jsf");
-			Print.m("Setting save file to " + savePath.toString());
-			saveFile = new File(savePath.toURI());
-		} catch (URISyntaxException e)
-		{
-			Print.e("Could not load save file, wrong Syntax");
-			e.printStackTrace();
-		}
+
+		saveFile = new File("Items.jsf");
+
+		Print.m("Setting save file to " + saveFile.getAbsolutePath());
 		readSaveFile();
 	}
 
@@ -42,6 +37,17 @@ public class Main
 	
 	public void readSaveFile()
 	{
-		windowManager.load(saveFile);
+		if(!saveFile.exists())
+		{
+			try
+			{
+				Print.m("File " + saveFile.getPath() + " doesn't exist, loading default one!");
+				FileUtils.stream(Main.class.getResourceAsStream("/save/Items.jsf"), new FileOutputStream(saveFile));
+			} catch (FileNotFoundException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		windowManager.load();
 	}
 }
