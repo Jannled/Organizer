@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import com.github.jannled.lib.ArrayUtils;
 import com.github.jannled.lib.FileUtils;
 import com.github.jannled.lib.Print;
+import com.github.jannled.organizer.window.Searchbar;
 import com.github.jannled.organizer.window.WindowManager;
 import com.github.jannled.window.Utils;
 
@@ -15,6 +16,7 @@ public class Main
 	public static File saveFile;
 	WindowManager windowManager;
 	Manager manager;
+	Searchbar searchbar;
 	
 	public Main()
 	{

@@ -24,6 +24,7 @@ public class Entry extends JPanel
 	
 	ListEntry list;
 	DropdownButton dropdown;
+	DeleteEntryButton delete;
 	StorageKey storageKey;
 	String[][] information;
 	JTextField name;
@@ -32,6 +33,7 @@ public class Entry extends JPanel
 	public Entry(ListEntry list, StorageKey storageKey)
 	{
 		this.storageKey = storageKey;
+		this.list = list;
 		StorageKey[] storageKeys = storageKey.getKeysArray();
 		name = new JTextField(storageKey.getName());
 		description = new JTextArea(storageKey.getValue());
@@ -54,9 +56,13 @@ public class Entry extends JPanel
 		dropdown = new DropdownButton(20, 20);
 		this.add(dropdown);
 		
+		delete = new DeleteEntryButton(this, 20, 20);
+		delete.setBounds(580, 0, 20, 20);
+		this.add(delete);
+		
 		name.setFont(new Font(defaultF, Font.PLAIN, 15));
 		name.setEditable(false);
-		name.setBounds(20, 0, 580, 20);
+		name.setBounds(20, 0, 560, 20);
 		
 		description.setLineWrap(true);
 		description.setBackground(UIManager.getColor("Panel.background"));
@@ -159,6 +165,14 @@ public class Entry extends JPanel
 		}
 	}
 	
+	public void selfDelete()
+	{
+		list.getPanel().remove(this);
+		storageKey.getParent().removeKey(storageKey);
+		list.revalidate();
+		list.repaint();
+	}
+	
 	@Override
 	public Dimension getPreferredSize() 
 	{
@@ -170,5 +184,31 @@ public class Entry extends JPanel
 		{
 			return minimized;
 		}
+	}
+	
+	public void setListEntry(ListEntry category)
+	{
+		list = category;
+	}
+	
+	public StorageKey getItem()
+	{
+		return storageKey;
+	}
+	
+	@Override
+	public String getName()
+	{
+		return name.getText();
+	}
+	
+	public String getDescription()
+	{
+		String out = "";
+		for(String[] s : information)
+		{
+			out += s[0] + ": " + s[1] + System.lineSeparator();
+		}
+		return out;
 	}
 }

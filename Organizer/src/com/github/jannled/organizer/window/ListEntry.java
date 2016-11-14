@@ -1,6 +1,7 @@
 package com.github.jannled.organizer.window;
 
 import java.awt.BorderLayout;
+import java.util.Arrays;
 import java.util.Vector;
 
 import javax.swing.BoxLayout;
@@ -33,6 +34,7 @@ public class ListEntry extends JPanel
 		for(Entry e : entrys)
 		{
 			this.entrys.add(e);
+			e.setListEntry(this);
 			panel.add(e);
 		}
 	}
@@ -62,6 +64,7 @@ public class ListEntry extends JPanel
 	
 	public void addEntry(Entry entry)
 	{
+		entry.setListEntry(this);
 		entrys.add(entry);
 		panel.add(entry);
 	}
@@ -75,6 +78,24 @@ public class ListEntry extends JPanel
 	public Entry[] getEntrys()
 	{
 		return (Entry[]) entrys.toArray();
+	}
+	
+	public void search(String text)
+	{
+		for(Entry e : entrys)
+		{
+			if(!e.getName().toLowerCase().contains(text.toLowerCase()) | !e.getDescription().toLowerCase().contains(text.toLowerCase()))
+			{
+				panel.remove(e);
+			}
+			else
+			{
+				if(!Arrays.asList(panel.getComponents()).contains(e))
+					panel.add(e);
+			}
+		}
+		panel.validate();
+		panel.repaint();
 	}
 	
 	@Override

@@ -36,9 +36,10 @@ public class WindowManager
 	Manager manager;
 	
 	private JFrame frame;
-	private Searchbar searchbar = new Searchbar();
 	private final JPanel panel = new JPanel();
 	private final JTabbedPane tabbedPane = new TabbedPane(JTabbedPane.TOP);
+	
+	Searchbar searchbar = new Searchbar(this);
 	
 	Vector<ListEntry> entryList = new Vector<ListEntry>();
 	private ListEntry activeEntryList;
